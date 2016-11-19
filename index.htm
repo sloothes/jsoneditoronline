@@ -1,0 +1,139 @@
+<!DOCTYPE HTML>
+
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+
+    <title>JSON在线编辑器 - view, edit and format JSON online</title>
+
+    <meta name="description" content="JSON Editor Online is a web-based tool to view, edit, and format JSON. It shows your data side by side in a clear, editable treeview and in a code editor. JSON在线编缉器是一款网页版的JSON工具，用于在线编缉，查看以及格式化JSON. TA可以将你的数据以横向对比，用一种清晰，方便查看的树状图来展示在代码编缉器上，所见即所得。">
+    <meta name="keywords" content="json, editor, formatter, online, format, parser, json editor, json editor online, online json editor, javascript, javascript object notation, tools, tool, json tools, treeview, open source, free, json parser, json parser online, json formatter, json formatter online, online json formatter, online json parser, format json online, 编辑器, 格式化, 在线, 解析, json编辑器, json在线编辑器, 在线json编辑器, 工具, json工具, 树视图, 开源, 免费, json解析, json解析在线, json在线解析, json格式化, json在线格式化, json格式化在线, 在线json格式化, 在线json解析器">
+    <meta name="author" content="Wayde Sun">
+
+    <link rel="shortcut icon" href="favicon.ico">
+
+    <link rel="stylesheet" type="text/css" href="app.min.css">
+    <script type="text/javascript" src="app.min.js" charset="utf-8"></script>
+</head>
+
+<body>
+
+<div id="header">
+    <a href="http://www.jsoneditoronline.cn" class="header">
+        <img alt="JSON Editor Online" title="JSON Editor Online" src="img/logo.png" id="logo">
+    </a>
+
+    <div id="name-menu">
+        <div id="name" title="Document name. Click to change"></div>
+        <div id="name-status" title="Changes are automatically saved online"></div>
+    </div>
+
+    <div id="menu">
+        <ul>
+            <li>
+                <a id="new" title="Open a new, empty document">New</a>
+            </li>
+            <li>
+                <a id="open" title="Open file">
+                    Open <span class="dropDownIcon">&#x25BC;</span>
+                </a>
+                <ul id="openMenu">
+                    <li>
+                        <a id="openFromDisk" title="Open file from disk">Open from disk</a>
+                    </li>
+                    <li>
+                        <a id="openUrl" title="Open file from url">Open url</a>
+                    </li>
+                    <li id="filesList"></li>
+                </ul>
+            </li>
+            <li>
+                <a id="save" title="Save file">
+                    Save <span class="dropDownIcon">&#x25BC;</span>
+                </a>
+                <ul id="saveMenu">
+                    <li>
+                        <a id="saveToDisk" title="Save file to disk">Save to disk</a>
+                    </li>
+                    <li style="display: none;">
+                        <a id="saveOnline" title="Save and share online">Save online</a>
+                    </li>
+                </ul>
+            </li>
+            <li class="settings" style="display: none;">
+                <a id="settings" title="Settings">
+                    Settings <span class="dropDownIcon">&#x25BC;</span>
+                </a>
+                <ul id="settingsMenu">
+                    <li>
+                        <div class="indentation">
+                            <label for="indentation">Indentation <input id="indentation" value="2" /></label>
+                        </div>
+                    </li>
+                    <li id="schemasList"></li>
+                </ul>
+            </li>
+            <li style="display: none;">
+                <a id="help" title="Open documentation (opens in a new window)" href="doc/index.html" target="_blank">Help</a>
+            </li>
+        </ul>
+    </div>
+
+</div>
+
+<div id="auto">
+    <div id="contents">
+        <div id="codeEditor"></div>
+
+        <div id="splitter">
+            <div id="buttons">
+                <div>
+                    <button id="toTree" class="convert" title="Copy code to tree editor (Ctrl + >)">
+                        <div class="convert-right"></div>
+                    </button>
+                </div>
+                <div>
+                    <button id="toCode" class="convert" title="Copy tree to code editor (Ctrl + <)">
+                        <div class="convert-left"></div>
+                    </button>
+                </div>
+            </div>
+            <div id="drag">
+            </div>
+        </div>
+
+        <div id="treeEditor"></div>
+
+        <script type="text/javascript">
+            app.load();
+            app.resize();
+        </script>
+
+        <div id="ad">
+            <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+            <!-- jsoneditoronline.cn -->
+            <ins class="adsbygoogle"
+                 style="display:block;width:160px;height:600px;"
+                 data-ad-client="ca-pub-2374212885550126"
+                 data-ad-slot="5022467494"></ins>
+            <script>
+                (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+        </div>
+
+    </div>
+
+    <div id="footer">
+        <div id="footer-inner">
+            <a href="http://www.jsoneditoronline.cn" class="footer">JSON Editor Online 1.0</a>
+            &bull;
+            Copyright 2011-2017 Wayde Sun
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        app.resize();
+    </script>
+
+</body>
+</html>
