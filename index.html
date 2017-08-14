@@ -4,18 +4,57 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
 
-    <title>JSON在线编辑器 - view, edit and format JSON online</title>
+    <title>JSON Editor Online (JSON在线编辑器) - view, edit and format JSON online</title>
 
-    <meta name="description"
-          content="JSON Editor Online is a web-based tool to view, edit, and format JSON. It shows your data side by side in a clear, editable treeview and in a code editor. JSON在线编缉器是一款网页版的JSON工具，用于在线编缉，查看以及格式化JSON. TA可以将你的数据以横向对比，用一种清晰，方便查看的树状图来展示在代码编缉器上，所见即所得。">
-    <meta name="keywords"
-          content="json, editor, formatter, online, format, parser, json editor, json editor online, online json editor, javascript, javascript object notation, tools, tool, json tools, treeview, open source, free, json parser, json parser online, json formatter, json formatter online, online json formatter, online json parser, format json online, 编辑器, 格式化, 在线, 解析, json编辑器, json在线编辑器, 在线json编辑器, 工具, json工具, 树视图, 开源, 免费, json解析, json解析在线, json在线解析, json格式化, json在线格式化, json格式化在线, 在线json格式化, 在线json解析器">
+    <!--
+
+    @file index.html
+
+    @brief
+    JSON Editor Online is a web-based tool to view, edit, and format JSON.
+    It shows your data side by side in a clear, editable treeview and in 
+    a code editor.
+
+    Supported browsers: Chrome, Firefox, Safari, Opera, Internet Explorer 8+
+
+    @license
+    This json editor is open sourced with the intention to use the editor as
+    a component in your own application. Not to just copy and monetize the editor
+    as it is.
+
+    Licensed under the Apache License, Version 2.0 (the "License"); you may not
+    use this file except in compliance with the License. You may obtain a copy
+    of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+    WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+    License for the specific language governing permissions and limitations under
+    the License.
+
+    Copyright (C) 2011-2017 Wayde Sun, http://www.jsoneditoronline.cn
+
+    @author   Wayde Sun, <wayde.sun@gmail.com>
+    @date     2017-07-07
+    -->
+
+    <meta name="description" content="JSON Editor Online is a web-based tool to view, edit, and format JSON. It shows your data side by side in a clear, editable treeview and in a code editor.">
+    <meta name="keywords" content="json, editor, formatter, online, format, parser, json editor, json editor online, online json editor, javascript, javascript object notation, tools, tool, json tools, treeview, open source, free, json parser, json parser online, json formatter, json formatter online, online json formatter, online json parser, format json online">
     <meta name="author" content="Wayde Sun">
 
     <link rel="shortcut icon" href="favicon.ico">
 
-    <link rel="stylesheet" type="text/css" href="app.min.css">
-    <script type="text/javascript" src="app.min.js" charset="utf-8"></script>
+    <link rel="stylesheet" type="text/css" href="app-min.css">
+    <link rel="stylesheet" type="text/css" href="lib/jsoneditor/jsoneditor-min.css">
+    <!-- TODO: droid font
+        <link href='http://fonts.googleapis.com/css?family=Droid+Sans+Mono' rel='stylesheet' type='text/css'>
+    -->
+
+    <script type="text/javascript" src="lib/jsoneditor/jsoneditor-min.js"></script>
+    <script type="text/javascript" src="lib/ace/ace-min.js"></script>
+    <script type="text/javascript" src="app-min.js"></script>
 </head>
 
 <body>
@@ -25,77 +64,76 @@
         <img alt="JSON Editor Online" title="JSON Editor Online" src="img/logo.png" id="logo">
     </a>
 
-    <div id="name-menu">
-        <div id="name" title="Document name. Click to change"></div>
-        <div id="name-status" title="Changes are automatically saved online"></div>
-    </div>
-
     <div id="menu">
         <ul>
             <li>
-                <a id="new" title="Open a new, empty document">New</a>
+                <a id="clear" title="Clear contents">Clear</a>
             </li>
             <li>
-                <a id="open" title="Open file">
-                    Open <span class="dropDownIcon">&#x25BC;</span>
+                <a id="open" title="Open file from disk">
+                    Open
+                    <span id="openMenuButton" title="Open file from disk or url">
+                    &#x25BC;
+                    </span>
                 </a>
                 <ul id="openMenu">
                     <li>
-                        <a id="openFromDisk" title="Open file from disk">Open from disk</a>
+                        <a id="menuOpenFile" title="Open file from disk">Open&nbsp;file</a>
                     </li>
                     <li>
-                        <a id="openUrl" title="Open file from url">Open url</a>
+                        <a id="menuOpenUrl" title="Open file from url">Open&nbsp;url</a>
                     </li>
-                    <li id="filesList"></li>
                 </ul>
             </li>
             <li>
-                <a id="save" title="Save file">
-                    Save <span class="dropDownIcon">&#x25BC;</span>
-                </a>
-                <ul id="saveMenu">
-                    <li>
-                        <a id="saveToDisk" title="Save file to disk">Save to disk</a>
-                    </li>
-                    <li style="display: none;">
-                        <a id="saveOnline" title="Save and share online">Save online</a>
-                    </li>
-                </ul>
+                <a id="save" title="Save file to disk">Save</a>
             </li>
-            <li class="settings" style="display: none;">
-                <a id="settings" title="Settings">
-                    Settings <span class="dropDownIcon">&#x25BC;</span>
-                </a>
-                <ul id="settingsMenu">
-                    <li>
-                        <div class="indentation">
-                            <label for="indentation">Indentation <input id="indentation" value="2"/></label>
-                        </div>
-                    </li>
-                    <li id="schemasList"></li>
-                </ul>
-            </li>
-            <li style="display: none;">
+            <li>
                 <a id="help" title="Open documentation (opens in a new window)" href="doc/index.html" target="_blank">Help</a>
             </li>
         </ul>
     </div>
 
+    <!-- TODO: info, links, faq -->
+    <!--
+  <div class="info" style="display:none;">
+    JSON, or JavaScript Object Notation, is a lightweight text-based open standard
+    designed for human-readable data interchange. It is derived from the JavaScript
+    scripting language for representing simple data structures and associative arrays,
+    called objects. Despite its relationship to JavaScript, it is language-independent,
+    with parsers available for most languages.
+    The JSON format was originally specified by Douglas Crockford, and is described
+    in RFC 4627. The official Internet media type for JSON is application/json.
+    The JSON filename extension is .json.
+    The JSON format is often used for serializing and transmitting structured data
+    over a network connection. It is used primarily to transmit data between a server
+    and web application, serving as an alternative to XML.
+    <br><br>
+    From <a target="_blank" href="http://en.wikipedia.org/wiki/Json">Wikipedia</a>
+  </div>
+
+  <div class="links" style="display:none;">
+    <a target="_blank" href="http://json.org/">http://json.org/</a><br>
+    <a target="_blank" href="http://en.wikipedia.org/wiki/Json">http://en.wikipedia.org/wiki/Json</a><br>
+  </div>
+
+  <div class="faq" style="display:none;"></div>
+    -->
 </div>
 
 <div id="auto">
     <div id="contents">
-        <div id="codeEditor"></div>
+        <div id="jsonformatter"></div>
 
         <div id="splitter">
             <div id="buttons">
                 <div>
-                    <button id="toTree" class="convert" title="Copy code to tree editor (Ctrl + >)">
+                    <button id="toEditor" class="convert" title="Code to editor">
                         <div class="convert-right"></div>
                     </button>
                 </div>
                 <div>
-                    <button id="toCode" class="convert" title="Copy tree to code editor (Ctrl + <)">
+                    <button id="toCode" class="convert" title="Editor to code">
                         <div class="convert-left"></div>
                     </button>
                 </div>
@@ -104,7 +142,7 @@
             </div>
         </div>
 
-        <div id="treeEditor"></div>
+        <div id="jsoneditor"></div>
 
         <script type="text/javascript">
             app.load();
@@ -112,45 +150,46 @@
         </script>
 
         <script>
-            (function (i, s, o, g, r, a, m) {
-                i['GoogleAnalyticsObject'] = r;
-                i[r] = i[r] || function () {
-                            (i[r].q = i[r].q || []).push(arguments)
-                        }, i[r].l = 1 * new Date();
-                a = s.createElement(o),
-                        m = s.getElementsByTagName(o)[0];
-                a.async = 1;
-                a.src = g;
-                m.parentNode.insertBefore(a, m)
-            })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+          (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r;
+            i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+              }, i[r].l = 1 * new Date();
+            a = s.createElement(o),
+              m = s.getElementsByTagName(o)[0];
+            a.async = 1;
+            a.src = g;
+            m.parentNode.insertBefore(a, m)
+          })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
 
-            ga('create', 'UA-96359388-2', 'auto');
-            ga('send', 'pageview');
+          ga('create', 'UA-96359388-2', 'auto');
+          ga('send', 'pageview');
 
         </script>
 
         <!--<div id="ad">-->
-        <!--<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>-->
-        <!--&lt;!&ndash; json_editor_online_ad &ndash;&gt;-->
-        <!--<ins class="adsbygoogle"-->
-        <!--style="display:inline-block;width:300px;height:600px"-->
-        <!--data-ad-client="ca-pub-2374212885550126"-->
-        <!--data-ad-slot="2953192297"></ins>-->
-        <!--<script>-->
-        <!--(adsbygoogle = window.adsbygoogle || []).push({});-->
-        <!--</script>-->
+            <!--<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>-->
+            <!--&lt;!&ndash; json_editor_online_ad &ndash;&gt;-->
+            <!--<ins class="adsbygoogle"-->
+                 <!--style="display:inline-block;width:300px;height:600px"-->
+                 <!--data-ad-client="ca-pub-2374212885550126"-->
+                 <!--data-ad-slot="2953192297"></ins>-->
+            <!--<script>-->
+              <!--(adsbygoogle = window.adsbygoogle || []).push({});-->
+            <!--</script>-->
         <!--</div>-->
-
     </div>
+</div>
 
-    <div id="footer">
-        <div id="footer-inner">
-            <a href="http://www.jsoneditoronline.cn" class="footer">JSON Editor Online 1.0</a>
-            &bull;
-            Copyright 2011-2017 Wayde Sun
-            &bull;
-            京ICP备13034741号-2
-        </div>
+<div id="footer">
+    <div id="footer-inner">
+        <a href="http://www.jsoneditoronline.cn" class="footer">JSON Editor Online 2.0</a>
+        &bull;
+        <a href="datapolicy.txt" target="_blank" class="footer">Data policy</a>
+        &bull;
+        <a href="NOTICE" target="_blank" class="footer">Copyright 2011-2017 Wayde Sun</a>
+        &bull;
+        京ICP备13034741号-2
     </div>
 </div>
 
@@ -158,6 +197,7 @@
     app.resize();
 </script>
 
+<script type="text/javascript" src="lib/jsonlint/jsonlint.js"></script>
 
 </body>
 </html>
